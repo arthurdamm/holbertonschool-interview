@@ -14,7 +14,10 @@ def canUnlockAll(boxes):
         if not isinstance(boxes[box], list):
             continue
         for _box in boxes[box]:
-            if isinstance(_box, int) and _box >= 0 and _box < len(boxes)\
-              and not visited[_box]:
-                stack.append(_box)
+            try:
+                if isinstance(_box, int) and _box >= 0 and _box < len(boxes)\
+                  and not visited[_box]:
+                    stack.append(_box)
+            except Exception:
+                pass
     return all(visited)
