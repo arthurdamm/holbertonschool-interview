@@ -7,16 +7,13 @@ def canUnlockAll(boxes):
 
     try:
         visited = [False for i in range(len(boxes))]
-
-        def visitBox(box):
-            """Visits each box"""
-            if visited[box]:
-                return
+        stack = [0]
+        while len(stack):
+            box = stack.pop(0)
             visited[box] = True
             for _box in boxes[box]:
-                visitBox(_box)
-
-        visitBox(0)
+                if not visited[_box]:
+                    stack.append(_box)
         return all(visited)
     except Exception:
         return False
