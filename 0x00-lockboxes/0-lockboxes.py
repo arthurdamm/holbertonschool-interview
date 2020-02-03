@@ -4,19 +4,15 @@
 
 def canUnlockAll(boxes):
     """Solves the problem"""
-    unlocked = set()
-    visited = set()
-    unlocked.add(0)
+    visited = [False for i in range(len(boxes))]
 
     def visitBox(box):
         """Visits each box"""
-        if box in visited:
+        if visited[box]:
             return
-        visited.add(box)
-        for _box in boxes[box]:
-            unlocked.add(_box)
+        visited[box] = True
         for _box in boxes[box]:
             visitBox(_box)
 
     visitBox(0)
-    return len(unlocked) == len(boxes)
+    return all(visited)
