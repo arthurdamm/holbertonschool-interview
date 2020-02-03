@@ -4,8 +4,10 @@
 
 def canUnlockAll(boxes):
     """Solves the problem"""
-    if not boxes or not isinstance(boxes, list) or not len(boxes):
+    if not isinstance(boxes, list):
         return False
+    if not len(boxes):
+        return True
     visited = [False for i in range(len(boxes))]
     stack = [0]
     while len(stack):
