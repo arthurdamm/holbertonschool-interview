@@ -4,6 +4,9 @@
 
 def canUnlockAll(boxes):
     """Solves the problem"""
+    if not boxes or not len(boxes):
+        return True
+
     visited = [False for i in range(len(boxes))]
 
     def visitBox(box):
