@@ -9,8 +9,6 @@ def canUnlockAll(boxes):
     stack = [0]
     while len(stack):
         box = stack.pop(0)
-        if not isinstance(boxes[box], list):
-            return False
         for _box in boxes[box]:
             if isinstance(_box, int) and _box >= 0 and _box < len(boxes)\
               and not visited[_box]:
