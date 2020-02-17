@@ -55,9 +55,9 @@ heap_t *heapify(heap_t *node)
 {
 	while (node && node->parent && node->n > node->parent->n)
 	{
-		node->parent->n += node->n;
-		node->n = node->parent->n - node->n;
 		node->parent->n -= node->n;
+		node->n = node->parent->n + node->n;
+		node->parent->n = node->n - node->parent->n;
 		node = node->parent;
 	}
 	return (node);
