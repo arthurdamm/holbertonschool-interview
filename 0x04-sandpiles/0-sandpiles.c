@@ -9,10 +9,8 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
 	add_sandpile(grid1, grid2);
 	while (is_unstable(grid1))
-	{
-		print_sandpile(grid1);
+		print_sandpile(grid1),
 		topple_sandpile(grid1, grid2);
-	}
 
 }
 
@@ -42,13 +40,11 @@ void topple_sandpile(int grid1[3][3], int grid2[3][3])
 	for (i = 0; i < 3; i++)
 		for (j = 0; j < 3; j++)
 			if (grid1[i][j] > 3)
-			{
-				(i > 0) ? grid2[i - 1][j] += 1 : 0;
-				(j > 0) ? grid2[i][j - 1] += 1 : 0;
-				(i < 2) ? grid2[i + 1][j] += 1 : 0;
-				(j < 2) ? grid2[i][j + 1] += 1 : 0;
+				(i > 0) ? grid2[i - 1][j] += 1 : 0,
+				(j > 0) ? grid2[i][j - 1] += 1 : 0,
+				(i < 2) ? grid2[i + 1][j] += 1 : 0,
+				(j < 2) ? grid2[i][j + 1] += 1 : 0,
 				grid1[i][j] -= 4;
-			}
 	add_sandpile(grid1, grid2);
 }
 
