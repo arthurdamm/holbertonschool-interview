@@ -26,13 +26,8 @@ void add_sandpile(int grid1[3][3], int grid2[3][3])
 	size_t i, j;
 
 	for (i = 0; i < 3; i++)
-	{
 		for (j = 0; j < 3; j++)
-		{
-			grid1[i][j] += grid2[i][j];
-			grid2[i][j] = 0;
-		}
-	}
+			grid1[i][j] += grid2[i][j], grid2[i][j] = 0;
 }
 
 /**
@@ -45,23 +40,15 @@ void topple_sandpile(int grid1[3][3], int grid2[3][3])
 	size_t i, j;
 
 	for (i = 0; i < 3; i++)
-	{
 		for (j = 0; j < 3; j++)
-		{
 			if (grid1[i][j] > 3)
 			{
-				if (i > 0)
-					grid2[i - 1][j] += 1;
-				if (j > 0)
-					grid2[i][j - 1] += 1;
-				if (i < 2)
-					grid2[i + 1][j] += 1;
-				if (j < 2)
-					grid2[i][j + 1] += 1;
+				(i > 0) ? grid2[i - 1][j] += 1 : 0;
+				(j > 0) ? grid2[i][j - 1] += 1 : 0;
+				(i < 2) ? grid2[i + 1][j] += 1 : 0;
+				(j < 2) ? grid2[i][j + 1] += 1 : 0;
 				grid1[i][j] -= 4;
 			}
-		}
-	}
 	add_sandpile(grid1, grid2);
 }
 
@@ -75,13 +62,9 @@ int is_unstable(int grid[3][3])
 	size_t i, j;
 
 	for (i = 0; i < 3; i++)
-	{
 		for (j = 0; j < 3; j++)
-		{
 			if (grid[i][j] > 3)
 				return (1);
-		}
-	}
 	return (0);
 }
 
