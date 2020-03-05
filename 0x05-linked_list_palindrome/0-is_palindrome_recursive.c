@@ -22,10 +22,7 @@ int is_pali(listint_t *node, listint_t **head)
 {
 	if (!node)
 		return (1);
-	if (node->next)
-		if (!is_pali(node->next, head))
-			return (0);
-	if (node->n != (*head)->n)
+	if (!is_pali(node->next, head) || node->n != (*head)->n)
 		return (0);
 	*head = (*head)->next;
 	return (1);
