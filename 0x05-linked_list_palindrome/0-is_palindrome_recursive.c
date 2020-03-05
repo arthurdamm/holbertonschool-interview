@@ -20,10 +20,6 @@ int is_palindrome(listint_t **head)
  */
 int is_pali(listint_t *node, listint_t **head)
 {
-	if (!node)
-		return (1);
-	if (!is_pali(node->next, head) || node->n != (*head)->n)
-		return (0);
-	*head = (*head)->next;
-	return (1);
+	return (!node || (!is_pali(node->next, head)
+		&& node->n == (*head)->n && (*head = (*head)->next), 1));
 }
