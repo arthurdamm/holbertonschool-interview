@@ -7,28 +7,29 @@
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *slow, *fast, *tail, *forward, *backward;
+	listint_t *slow, *fast, *tail;
 	int result = 1;
 
 	if (!head || !*head || !(*head)->next)
 		return (1);
 
-	slow = fast = forward = *head;
+	slow = fast = *head;
 	while (fast && fast->next)
 	{
 		slow = slow->next;
 		fast = fast->next->next;
 	}
-	backward = tail = reverse_list(slow);
-	while (backward)
+	fast = tail = reverse_list(slow);
+	slow = *head;
+	while (fast)
 	{
-		if (backward->n != forward->n)
+		if (fast->n != slow->n)
 		{
 			result = 0;
 			break;
 		}
-		backward = backward->next;
-		forward = forward->next;
+		fast = fast->next;
+		slow = slow->next;
 	}
 	reverse_list(tail);
 	return (result);
