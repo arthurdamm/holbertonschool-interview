@@ -29,7 +29,11 @@ def parse_log():
         match = pattern.match(line)
         if not match:
             continue
-        code, size = (int(n) for n in match.groups()[-2:])
+        code, size = 0, 0
+        try:
+            code, size = (int(n) for n in match.groups()[-2:])
+        except ValueError:
+            pass
         codes["size"] += size
         if code in codes:
             codes[code] += 1
