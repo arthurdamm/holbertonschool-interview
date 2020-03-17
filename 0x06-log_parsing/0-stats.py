@@ -7,7 +7,6 @@ import re
 import sys
 
 CODES = {200, 301, 400, 401, 403, 404, 405, 500}
-REGEX = '^(\S+) - \[(.+)\] "[^"]*" (\S+) (\S+)$'
 
 codes = {code: 0 for code in CODES}
 codes["size"] = 0
@@ -26,12 +25,13 @@ def parse_log():
     """Parses the stdin line by line for log info"""
     i = 1
     for line in sys.stdin:
-        match = pattern.match(line)
-        if not match:
-            continue
+        words = line.split(" ")
+        if len(words) < 2:
+        	continue
         code, size = 0, 0
         try:
-            code, size = (int(n) for n in match.groups()[-2:])
+            code = int(words[-2])
+            size = int(words[-1])
         except ValueError:
             pass
         codes["size"] += size
