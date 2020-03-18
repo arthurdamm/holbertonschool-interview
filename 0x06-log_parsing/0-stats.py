@@ -11,6 +11,7 @@ CODES = {200, 301, 400, 401, 403, 404, 405, 500}
 codes = {code: 0 for code in CODES}
 codes["size"] = 0
 
+
 def print_metrics():
     """Prints the summary of total file size and lines per status code"""
     print("File size:", codes["size"])
@@ -25,11 +26,14 @@ def parse_log():
     for line in sys.stdin:
         words = line.split(" ")
         if len(words) < 2:
-        	continue
+            continue
         code, size = 0, 0
         try:
-            code = int(words[-2])
             size = int(words[-1])
+        except ValueError:
+            pass
+        try:
+            code = int(words[-2])
         except ValueError:
             pass
         codes["size"] += size
