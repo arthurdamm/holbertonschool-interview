@@ -1,57 +1,37 @@
 #!/usr/bin/python3
-"""
-Script to parse stdin for a line of logging:
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
-"""
-import re
+'''Module for log parsing script.'''
 import sys
 
-CODES = {200, 301, 400, 401, 403, 404, 405, 500}
+if __name__ == "__main__":
+    size = [0]
+    codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
-codes = {code: 0 for code in CODES}
-codes["size"] = 0
-
-
-def print_metrics():
-    """Prints the summary of total file size and lines per status code"""
-    print("File size:", codes["size"])
-    for code in CODES:
-        if code in codes and codes[code] > 0:
-            print("{}: {}".format(code, codes[code]))
-
-
-def parse_log():
-    """Parses the stdin line by line for log info"""
-    i = 1
-    for line in sys.stdin:
+    def check_match(line):
+        '''Checks for regexp match in line.'''
         try:
             line = line[:-1]
             words = line.split(" ")
-            if len(words) < 2:
-                continue
-            code, size = 0, 0
-            try:
-                size = int(words[-1])
-            except ValueError:
-                pass
-            try:
-                code = int(words[-2])
-            except ValueError:
-                pass
-            codes["size"] += size
+            size[0] += int(words[-1])
+            code = int(words[-2])
             if code in codes:
                 codes[code] += 1
-            if not i % 10:
-                print_metrics()
-            i += 1
         except:
             pass
 
-if __name__ == "__main__":
+    def print_stats():
+        '''Prints accumulated statistics.'''
+        print("File size: {}".format(size[0]))
+        for k in sorted(codes.keys()):
+            if codes[k]:
+                print("{}: {}".format(k, codes[k]))
+    i = 1
     try:
-        parse_log()
+        for line in sys.stdin:
+            check_match(line)
+            if i % 10 == 0:
+                print_stats()
+            i += 1
     except KeyboardInterrupt:
-        print_metrics()
+        print_stats()
         raise
-        pass
-    print_metrics()
+    print_stats()
