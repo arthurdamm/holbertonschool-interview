@@ -10,8 +10,6 @@ CODES = {200, 301, 400, 401, 403, 404, 405, 500}
 
 codes = {code: 0 for code in CODES}
 codes["size"] = 0
-pattern = re.compile(REGEX)
-
 
 def print_metrics():
     """Prints the summary of total file size and lines per status code"""
