@@ -24,24 +24,27 @@ def parse_log():
     """Parses the stdin line by line for log info"""
     i = 1
     for line in sys.stdin:
-        words = line.split(" ")
-        if len(words) < 2:
-            continue
-        code, size = 0, 0
         try:
-            size = int(words[-1])
-        except ValueError:
+            words = line.split(" ")
+            if len(words) < 2:
+                continue
+            code, size = 0, 0
+            try:
+                size = int(words[-1])
+            except ValueError:
+                pass
+            try:
+                code = int(words[-2])
+            except ValueError:
+                pass
+            codes["size"] += size
+            if code in codes:
+                codes[code] += 1
+            i += 1
+            if not i % 10:
+                print_metrics()
+        except:
             pass
-        try:
-            code = int(words[-2])
-        except ValueError:
-            pass
-        codes["size"] += size
-        if code in codes:
-            codes[code] += 1
-        i += 1
-        if not i % 10:
-            print_metrics()
 
 if __name__ == "__main__":
     try:
