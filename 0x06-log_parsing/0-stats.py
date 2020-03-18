@@ -25,6 +25,7 @@ def parse_log():
     i = 1
     for line in sys.stdin:
         try:
+        	line = line[:-1]
             words = line.split(" ")
             if len(words) < 2:
                 continue
@@ -40,9 +41,9 @@ def parse_log():
             codes["size"] += size
             if code in codes:
                 codes[code] += 1
-            i += 1
             if not i % 10:
                 print_metrics()
+            i += 1
         except:
             pass
 
