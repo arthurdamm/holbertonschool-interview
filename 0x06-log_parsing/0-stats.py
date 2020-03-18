@@ -25,7 +25,7 @@ def parse_log():
     i = 1
     for line in sys.stdin:
         try:
-        	line = line[:-1]
+            line = line[:-1]
             words = line.split(" ")
             if len(words) < 2:
                 continue
