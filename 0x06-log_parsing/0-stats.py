@@ -50,7 +50,7 @@ if __name__ == "__main__":
     try:
         parse_log()
     except KeyboardInterrupt:
-    	print_metrics()
-    	raise
+        print_metrics()
+        raise
         pass
     print_metrics()
