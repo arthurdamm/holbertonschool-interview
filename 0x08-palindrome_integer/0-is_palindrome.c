@@ -8,14 +8,8 @@
  */
 int is_palindrome_recursive(unsigned long n, unsigned long *_n)
 {
-	if (!n)
-		return (1);
-	if (!is_palindrome_recursive(n / 10, _n))
-		return (0);
-	if (n % 10 != *_n % 10)
-		return (0);
-	*_n /= 10;
-	return (1);
+	return (!n || (is_palindrome_recursive(n / 10, _n)
+		 && (n % 10 == *_n % 10) ? (*_n /= 10), 1 : 0));
 }
 
 /**
