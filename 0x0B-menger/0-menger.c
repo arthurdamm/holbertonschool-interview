@@ -6,22 +6,22 @@
  */
 void menger(int level)
 {
-	int n, i, j, x, y, c;
+	int n, row, col, _row, _col, c;
 
 	n = pow(3, level);
-	for (i = 0; i < n; i++)
+	for (row = 0; row < n; row++)
 	{
-		for (j = 0; j < n; )
+		for (col = 0; col < n; col++)
 		{
-			x = i;
-			y = j++;
+			_row = row;
+			_col = col;
 			c = '#';
-			while (x > 0 || y > 0)
+			while (_row || _col)
 			{
-				if (x % 3 == 1 && y % 3 == 1)
+				if (_row % 3 == 1 && _col % 3 == 1)
 					c = ' ';
-				x /= 3;
-				y /= 3;
+				_row /= 3;
+				_col /= 3;
 			}
 			putchar(c);
 		}
