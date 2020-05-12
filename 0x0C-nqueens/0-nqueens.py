@@ -18,7 +18,7 @@ def can_place(board, row, col):
 
 
 def nqueens(board, row, n):
-    """O(n^2) time, O(n) space"""
+    """O(n!) time, O(n) space"""
     if row == n:
         return solutions.append(board[:])
     for col in range(n):
