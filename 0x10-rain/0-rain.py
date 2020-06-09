@@ -16,5 +16,4 @@ def rain(walls):
         w = min(left_peaks[i], right_peak) - walls[i]
         right_peak = max(walls[i], right_peak)
         water += w if w > 0 else 0
-        #print(i, right_peak, w, water)
     return water
