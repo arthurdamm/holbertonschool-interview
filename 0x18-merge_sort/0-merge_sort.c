@@ -18,6 +18,7 @@ void merge_sort(int *array, size_t size)
 	while (++i < size)
 		copy[i] = array[i];
 	sort(array, copy, size);
+	free(copy);
 }
 
 /**
