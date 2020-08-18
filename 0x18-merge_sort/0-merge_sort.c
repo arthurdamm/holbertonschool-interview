@@ -44,7 +44,7 @@ void sort(int *A, int *B, size_t size)
  */
 void merge(int *A, int *B, size_t size)
 {
-	size_t i = 0, j = size / 2;
+	int *i = B, *j = B + size / 2;
 
 	printf("Merging...\n");
 	printf("[left]: ");
@@ -52,11 +52,11 @@ void merge(int *A, int *B, size_t size)
 	printf("[right]: ");
 	print_array(B + size / 2, size - size / 2);
 
-	while (i < size / 2 || j < size)
-		if (i < size / 2 && (j >= size || B[i] <= B[j]))
-			*A++ = B[i++];
+	while (i < B + size / 2 || j < B + size)
+		if (i < B + size / 2 && (j >= B + size || *i <= *j))
+			*A++ = *i++;
 		else
-			*A++ = B[j++];
+			*A++ = *j++;
 
 	printf("[Done]: ");
 	print_array(A - size, size);
