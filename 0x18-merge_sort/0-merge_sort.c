@@ -15,7 +15,7 @@ void merge_sort(int *array, size_t size)
 			*copy++ = *array++;
 		sort(array - size, copy - size, size);
 	}
-	copy ? free(copy - size) : (void)0;
+	copy ? free(size > 1 ? copy - size : copy) : (void)0;
 }
 
 /**
