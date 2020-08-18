@@ -7,18 +7,15 @@
  */
 void merge_sort(int *array, size_t size)
 {
-	int *copy;
-	size_t i = -1;
+	int *copy = malloc(sizeof(*copy) * size), *end = array + size;
 
-	if (size < 2)
-		return;
-	copy = malloc(sizeof(*copy) * size);
-	if (!copy)
-		return;
-	while (++i < size)
-		copy[i] = array[i];
-	sort(array, copy, size);
-	free(copy);
+	if (copy && size > 1)
+	{
+		while (array < end)
+			*copy++ = *array++;
+		sort(array - size, copy - size, size);
+	}
+	copy ? free(copy - size) : (void)0;
 }
 
 /**
@@ -29,11 +26,10 @@ void merge_sort(int *array, size_t size)
  */
 void sort(int *A, int *B, size_t size)
 {
-	if (size < 2)
-		return;
-	sort(B, A, size / 2);
-	sort(B + size / 2, A + size / 2, size - size / 2);
-	merge(A, B, size);
+	if (size > 1)
+		sort(B, A, size / 2),
+		sort(B + size / 2, A + size / 2, size - size / 2),
+		merge(A, B, size);
 }
 
 /**
@@ -46,14 +42,9 @@ void merge(int *A, int *B, size_t size)
 {
 	int *i = B, *j = B + size / 2;
 
-	printf("Merging...\n");
-	printf("[left]: ");
-	print_array(B, size / 2);
-	printf("[right]: ");
-	print_array(B + size / 2, size - size / 2);
+	printf("Merging...\n[left]: "), print_array(B, size / 2);
+	printf("[right]: "), print_array(B + size / 2, size - size / 2);
 	while (i < B + size / 2 || j < B + size)
 		*A++ = i < B + size / 2 && (j >= B + size || *i <= *j) ? *i++ : *j++;
-	printf("[Done]: ");
-	print_array(A - size, size);
-
+	printf("[Done]: "), print_array(A - size, size);
 }
