@@ -51,13 +51,8 @@ void merge(int *A, int *B, size_t size)
 	print_array(B, size / 2);
 	printf("[right]: ");
 	print_array(B + size / 2, size - size / 2);
-
 	while (i < B + size / 2 || j < B + size)
-		if (i < B + size / 2 && (j >= B + size || *i <= *j))
-			*A++ = *i++;
-		else
-			*A++ = *j++;
-
+		*A++ = i < B + size / 2 && (j >= B + size || *i <= *j) ? *i++ : *j++;
 	printf("[Done]: ");
 	print_array(A - size, size);
 
