@@ -41,7 +41,6 @@ def print_results(word_list, hot_list):
              len(re.findall('\s{}\s'.format(word), title, re.I))
 
     count = {k: v for k, v in count.items() if v > 0}
-    words = sorted(list(count.keys()))
-    for word in sorted(words,
+    for word in sorted(list(count.keys()),
                        reverse=True, key=lambda k: count[k]):
         print("{}: {}".format(word, count[word]))
