@@ -13,6 +13,8 @@ void heap_sort(int *A, size_t size)
 {
 	size_t len = size;
 
+	if (size < 2)
+		return;
 	heapify(A, size);
 	while (len > 1)
 		swap(A, 0, len - 1, size),
