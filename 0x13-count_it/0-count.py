@@ -37,8 +37,9 @@ def print_results(word_list, hot_list):
         count[word] = 0
     for title in hot_list:
         for word in word_list:
-            count[word] = count[word] +\
-             len(re.findall(r'(?:^| ){}(?:$| )'.format(word), title, re.I))
+            for title_word in title.lower().split():
+                if title_word == word.lower():
+                    count[word] += 1
 
     count = {k: v for k, v in count.items() if v > 0}
     words = sorted(list(count.keys()))
