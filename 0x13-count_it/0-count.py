@@ -32,6 +32,7 @@ def count_words(subreddit, word_list, hot_list=[], after=None):
 
 def print_results(word_list, hot_list):
     '''Prints request results'''
+    print(hot_list)
     count = {}
     for word in word_list:
         count[word] = 0
@@ -44,4 +45,4 @@ def print_results(word_list, hot_list):
     words = sorted(list(count.keys()))
     for word in sorted(words,
                        reverse=True, key=lambda k: count[k]):
-        print("{}: {}".format(word, count[word]))
+        print("{}: {}".format(word.lower(), count[word]))
