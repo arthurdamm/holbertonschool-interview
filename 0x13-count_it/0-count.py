@@ -32,14 +32,13 @@ def count_words(subreddit, word_list, hot_list=[], after=None):
 
 def print_results(word_list, hot_list):
     '''Prints request results'''
-    print(hot_list)
     count = {}
     for word in word_list:
         count[word] = 0
     for title in hot_list:
         for word in word_list:
             count[word] = count[word] +\
-             len(re.findall(r'(?:^|\s){}(?:$|\s)'.format(word), title, re.I))
+             len(re.findall(r'(?:^| ){}(?:$| )'.format(word), title, re.I))
 
     count = {k: v for k, v in count.items() if v > 0}
     words = sorted(list(count.keys()))
