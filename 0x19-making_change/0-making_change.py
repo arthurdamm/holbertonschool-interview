@@ -6,7 +6,7 @@ def makeChange(coins, total):
     """Clasic Bottom-Up dynamic programming"""
     if total <= 0:
         return 0
-    dp = [-1] * (total + 1)
+    dp = [float('inf')] * (total + 1)
     dp[0] = 0
     coins.sort()
     for i in range(total + 1):
@@ -14,5 +14,5 @@ def makeChange(coins, total):
             if coin > i:
                 break
             if dp[i - coin] != -1:
-                dp[i] = dp[i - coin] + 1
-    return dp[total]
+                dp[i] = min(dp[i - coin] + 1, dp[i])
+    return dp[total] if dp[total] != float('inf') else -1
