@@ -33,7 +33,7 @@ void radix_sort(int *A, size_t size)
  */
 int count_sort(int *A, ssize_t size, int *B, int exp)
 {
-	ssize_t i = 0;
+	ssize_t i, j;
 	int count[RADIX] = {0}, ret = 0;
 
 	for (i = 0; i < size; i++)
@@ -41,13 +41,13 @@ int count_sort(int *A, ssize_t size, int *B, int exp)
 	for (i = 1; i < size; i++)
 		count[i] += count[i - 1];
 	for (i = size - 1; i >= 0; i--)
-		B[count[(A[i] / exp) % RADIX]-- - 1] = A[i];
-	for (i = 0; i < size; i++)
-		if (A[i] != B[i])
-		{
-			A[i] = B[i];
+	{
+		j = count[(A[i] / exp) % RADIX]-- - 1;
+		if (i != j)
 			ret = 1;
-		}
+		B[j] = A[i];
+	}
+	for (i = 0; i < size; i++)
+		A[i] = B[i];
 	return (ret);
-
 }
