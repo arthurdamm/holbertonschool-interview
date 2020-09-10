@@ -40,16 +40,11 @@ int count_sort(int *A, ssize_t size, int *B, long exp)
 	int count[RADIX] = {0}, ret = 0;
 
 	for (i = 0; i < size; i++)
-		count[(A[i] / exp) % RADIX]++;
+		count[(A[i] / exp) % RADIX]++, B[i] = 0;
 	for (i = 1; i < size; i++)
 		count[i] += count[i - 1];
 	for (i = size - 1; i >= 0; i--)
-	{
-		j = count[(A[i] / exp) % RADIX]-- - 1;
-		if (i != j)
-			ret = 1;
-		B[j] = A[i];
-	}
+		 B[--count[(A[i] / exp) % RADIX]] = A[i];
 	for (i = 0; i < size; i++)
 		A[i] = B[i];
 	return (ret);
