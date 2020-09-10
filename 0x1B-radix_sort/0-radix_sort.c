@@ -17,8 +17,8 @@ void radix_sort(int *A, size_t size)
 		max = A[i] > max ? A[i] : max;
 	for (exp = 1; max / exp > 0; exp *= RADIX)
 	{
-		count_sort(A, size, B, exp);
-		print_array(A, size);
+		if (count_sort(A, size, B, exp))
+			print_array(A, size);
 	}
 	free(B);
 }
@@ -29,11 +29,12 @@ void radix_sort(int *A, size_t size)
  * @size: size of array
  * @B: malloced temp array
  * @exp: current digital exponent
+ * Return: if array changed
  */
-void count_sort(int *A, ssize_t size, int *B, int exp)
+int count_sort(int *A, ssize_t size, int *B, int exp)
 {
 	ssize_t i = 0;
-	int count[RADIX] = {0};
+	int count[RADIX] = {0}, ret = 0;
 
 	for (i = 0; i < size; i++)
 		count[(A[i] / exp) % RADIX]++;
@@ -42,5 +43,11 @@ void count_sort(int *A, ssize_t size, int *B, int exp)
 	for (i = size - 1; i >= 0; i--)
 		B[count[(A[i] / exp) % RADIX]-- - 1] = A[i];
 	for (i = 0; i < size; i++)
-		A[i] = B[i];
+		if (A[i] != B[i])
+		{
+			A[i] = B[i];
+			ret = 1;
+		}
+	return (ret);
+
 }
