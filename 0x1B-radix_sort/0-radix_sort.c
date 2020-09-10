@@ -20,7 +20,7 @@ void radix_sort(int *A, size_t size)
 		count_sort(A, size, B, exp);
 		print_array(A, size);
 	}
-
+	free(B);
 }
 
 /**
