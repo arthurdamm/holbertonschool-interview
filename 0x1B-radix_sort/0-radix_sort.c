@@ -8,8 +8,11 @@
 void radix_sort(int *A, size_t size)
 {
 	size_t i;
-	int max = INT_MIN, exp, *B;
+	int max = INT_MIN, *B;
+	long exp;
 
+	if (!A || size < 2)
+		return;
 	B = malloc(sizeof(*B) * size);
 	if (!B)
 		return;
@@ -17,8 +20,8 @@ void radix_sort(int *A, size_t size)
 		max = A[i] > max ? A[i] : max;
 	for (exp = 1; max / exp > 0; exp *= RADIX)
 	{
-		if (count_sort(A, size, B, exp))
-			print_array(A, size);
+		count_sort(A, size, B, exp);
+		print_array(A, size);
 	}
 	free(B);
 }
@@ -31,7 +34,7 @@ void radix_sort(int *A, size_t size)
  * @exp: current digital exponent
  * Return: if array changed
  */
-int count_sort(int *A, ssize_t size, int *B, int exp)
+int count_sort(int *A, ssize_t size, int *B, long exp)
 {
 	ssize_t i, j;
 	int count[RADIX] = {0}, ret = 0;
