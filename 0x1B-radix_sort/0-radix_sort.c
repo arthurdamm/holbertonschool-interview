@@ -36,7 +36,7 @@ void radix_sort(int *A, size_t size)
  */
 int count_sort(int *A, ssize_t size, int *B, long exp)
 {
-	ssize_t i, j;
+	ssize_t i;
 	int count[RADIX] = {0}, ret = 0;
 
 	for (i = 0; i < size; i++)
