@@ -16,12 +16,14 @@ def island_perimeter(grid):
         grid[row][col] = -1
         perimeter = 0
         for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
-            if not 0 <= row + dr <= len(grid) or not 0 <= col < len(grid[row])\
-               or grid[row + dr][col + dc] == 0:
+            if not 0 <= row + dr < len(grid) or \
+               not 0 <= col + dc < len(grid[row]) or \
+               grid[row + dr][col + dc] == 0:
                 perimeter += 1
         for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
             perimeter += dfs(row + dr, col + dc)
         return perimeter
+
     perimeter = 0
     for row in range(len(grid)):
         for col in range(len(grid[row])):
