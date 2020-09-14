@@ -4,6 +4,7 @@ Island Perimeter Algo
 O(n) time O(1) space
 """
 
+
 def island_perimeter(grid):
     """Looks up and left to subtract water"""
     perimeter = 0
