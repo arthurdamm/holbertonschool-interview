@@ -34,7 +34,7 @@ int is_avl(const binary_tree_t *tree, int min, int max, int *height)
 		*height = 0;
 		return (1);
 	}
-	if (tree->n < min || tree->n > max)
+	if (tree->n <= min || tree->n >= max)
 		return (0);
 	if (!is_avl(tree->left, min, tree->n, &h1) ||
 		!is_avl(tree->right, tree->n, max, &h2))
