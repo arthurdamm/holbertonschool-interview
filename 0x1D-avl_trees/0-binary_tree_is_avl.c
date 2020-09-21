@@ -1,8 +1,5 @@
 #include "binary_trees.h"
 
-#define MAX(x, y) ((x) > (y) ? (x) : (y))
-#define ABS(x) ((x) > 0 ? (x) : (-(x)))
-
 /**
  * binary_tree_is_avl - checks is tree is AVL
  * @tree: pointer to root node
@@ -30,17 +27,12 @@ int is_avl(const binary_tree_t *tree, int min, int max, int *height)
 	int h1 = 0, h2 = 0;
 
 	if (!tree)
-	{
-		*height = 0;
 		return (1);
-	}
 	if (tree->n <= min || tree->n >= max)
 		return (0);
 	if (!is_avl(tree->left, min, tree->n, &h1) ||
 		!is_avl(tree->right, tree->n, max, &h2))
 		return (0);
-	if (ABS(h1 - h2) > 1)
-		return (0);
 	*height = MAX(h1, h2) + 1;
-	return (1);
+	return (ABS(h1 - h2) > 1);
 }

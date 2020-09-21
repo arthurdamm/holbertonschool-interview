@@ -4,6 +4,9 @@
 #include <limits.h>
 #include <stdio.h>
 
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+#define ABS(x) ((x) > 0 ? (x) : (-(x)))
+
 /**
  * struct binary_tree_s - Binary tree node
  *
