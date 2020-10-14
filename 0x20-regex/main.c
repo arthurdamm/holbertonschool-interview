@@ -18,6 +18,8 @@
 int main(void)
 {
 	setbuf(stdout, NULL);
+    TEST_MATCH("", ".");
+    TEST_MATCH("", ".*");
     TEST_MATCH("", "");
     TEST_MATCH("H", "");
     TEST_MATCH("", "H");
