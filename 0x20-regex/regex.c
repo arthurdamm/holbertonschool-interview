@@ -16,7 +16,7 @@ int regex_match(char const *str, char const *pattern)
 		memo[i] = malloc(sz * sizeof(int));
 		memset(memo[i], 0, sz * sizeof(int));
 	}
-	ret = _regex_match(str, pattern);
+	ret = _regex_match(str, pattern, memo, str, pattern);
 	for (i = 0; i < strlen(str) + 1; i++)
 		free(memo[i]);
 	free(memo);
@@ -27,10 +27,17 @@ int regex_match(char const *str, char const *pattern)
  * _regex_match - matches regex pattern to string
  * @str: the string
  * @pattern: the pattern
+ * @memo: memoization grid
+ * @s: starting pointer of str
+ * @p: starting pointer of pattern
  * Return: 1 if match else 0
  */
-int _regex_match(char const *str, char const *pattern)
+int _regex_match(char const *str, char const *pattern, int **memo,
+	char const *s, char const *p)
 {
+	if (memo[str - s][pattern - p])
+		return (0);
+	memo[str - s][pattern - p] = 1;
 	if (!*str)
 	{
 		if (!*pattern)
