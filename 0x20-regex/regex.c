@@ -9,24 +9,15 @@
 int regex_match(char const *str, char const *pattern)
 {
 	if (!*str)
-	{
-		if (!*pattern)
-			return (1);
-		if (pattern[1] == '*')
-			return (regex_match(str, pattern + 2));
-		return (0);
-	}
+		return (!*pattern ||
+			(pattern[1] == '*' && regex_match(str, pattern + 2)));
 	if (pattern[1] == '*')
 	{
-		if (pattern[0] == '.')
-			return (regex_match(str + 1, pattern) ||
-				regex_match(str, pattern + 2));
-		if (str[0] == pattern[0])
+		if (pattern[0] == '.' || str[0] == pattern[0])
 			return (regex_match(str + 1, pattern) ||
 				regex_match(str, pattern + 2));
 		return (regex_match(str, pattern + 2));
 	}
-	if (pattern[0] == '.' || pattern[0] == str[0])
-		return (regex_match(str + 1, pattern + 1));
-	return (0);
+	return ((pattern[0] == '.' || pattern[0] == str[0]) &&
+		regex_match(str + 1, pattern + 1));
 }
