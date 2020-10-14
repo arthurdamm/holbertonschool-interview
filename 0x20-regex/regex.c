@@ -2,22 +2,17 @@
 
 /**
  * regex_match - matches regex pattern to string
- * @str: the string
- * @pattern: the pattern
+ * @s: the string to search
+ * @p: the pattern
  * Return: 1 if match else 0
  */
-int regex_match(char const *str, char const *pattern)
+int regex_match(char const *s, char const *p)
 {
-	if (!*str)
-		return (!*pattern ||
-			(pattern[1] == '*' && regex_match(str, pattern + 2)));
-	if (pattern[1] == '*')
-	{
-		if (pattern[0] == '.' || str[0] == pattern[0])
-			return (regex_match(str + 1, pattern) ||
-				regex_match(str, pattern + 2));
-		return (regex_match(str, pattern + 2));
-	}
-	return ((pattern[0] == '.' || pattern[0] == str[0]) &&
-		regex_match(str + 1, pattern + 1));
+	if (!*s)
+		return (!*p || (p[1] == '*' && regex_match(s, p + 2)));
+	if (p[1] == '*')
+		return ((p[0] == '.' || s[0] == p[0]) ?
+			(regex_match(s + 1, p) || regex_match(s, p + 2)) :
+			(regex_match(s, p + 2)));
+	return ((p[0] == '.' || p[0] == s[0]) && regex_match(s + 1, p + 1));
 }
