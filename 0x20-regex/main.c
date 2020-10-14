@@ -18,6 +18,15 @@
 int main(void)
 {
 	setbuf(stdout, NULL);
+    TEST_MATCH("", "");
+    TEST_MATCH("H", "");
+    TEST_MATCH("", "H");
+    TEST_MATCH("ABCD", "...");
+    TEST_MATCH("ABCD", "...E");
+    TEST_MATCH("ABCD", "....");
+    TEST_MATCH("ABCD", "...D");
+    TEST_MATCH("ABCD", "A.*.*B.*.*..D*");
+    
 	TEST_MATCH("H", "H");
 	TEST_MATCH("HH", "H");
 	TEST_MATCH("HH", "H*");
