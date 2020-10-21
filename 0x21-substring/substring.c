@@ -25,10 +25,6 @@ void free_trie(Trie *root)
  */
 int search_trie(Trie *node, char *str, int k)
 {
-	char c = str[k];
-
-	str[k] = 0;
-	str[k] = c;
 	for (; k; str++, k--)
 	{
 		if (!node->children[INDEX(*str)])
@@ -61,9 +57,13 @@ void make_trie(Trie *root, char const **words, int nb_words, Trie **nodes)
 		node = root;
 		for (str = words[i]; *str; str++)
 		{
-			if (!node->children[*str - 'a'])
-				node->children[*str - 'a'] = calloc(1, sizeof(Trie));
-			node = node->children[*str - 'a'];
+			if (!node->children[INDEX(*str)])
+			{
+				node->children[INDEX(*str)] = calloc(1, sizeof(Trie));
+				if (!node->children[INDEX(*str)])
+					exit(1);
+			}
+			node = node->children[INDEX(*str)];
 		}
 		node->word = 1;
 		node->count++;
@@ -90,6 +90,8 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 	indices = calloc(1000, sizeof(int));
 	root = calloc(1, sizeof(Trie));
 	nodes = calloc(1, sizeof(*nodes) * nb_words);
+	if (!indices || !root || !nodes)
+		exit(1);
 	make_trie(root, words, nb_words, nodes);
 
 	slen = strlen(s);
@@ -110,9 +112,7 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 				}
 			}
 			else
-			{
 				break;
-			}
 		}
 		for (j = 0; j < nb_words; j++)
 			nodes[j]->left = nodes[j]->count;
