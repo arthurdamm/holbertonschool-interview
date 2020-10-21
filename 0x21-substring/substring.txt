@@ -1,0 +1,43 @@
+#include "substring.h"
+
+
+int cmp(const void *a, const void *b) {
+	int ret = strcmp(*(char **)a, *(char **)b);
+
+	printf("cmp [%s] [%s] -> %d\n", *(char **)a, *(char **)b, ret);
+	return ret;
+}
+
+/**
+ * find_substring - finds substring composed of all concatenated words
+ * @s: the string to search
+ * @words: array of contentated words to find
+ * @nb_words: the size of passed array
+ * @n: size of return array, to set
+ * Return: array of indices where all words found
+ */
+int *find_substring(char const *s, char const **_words, int nb_words, int *n)
+{
+	int i = 0;
+	char **words;
+
+	setbuf(stdout, NULL);
+
+	words = malloc(sizeof(char *) * (nb_words + 1));
+	memcpy(words, _words, sizeof(char *) * (nb_words + 1));
+	for (i = 0; i < nb_words; i++)
+		printf(">>[%s]\n", (char *)*((words) + i));
+	for (i = 0; i < nb_words; i++)
+		printf("[%d] [%s]\n", i, words[i]);
+	qsort(words, nb_words, sizeof(char *), cmp);
+	for (i = 0; i < nb_words; i++)
+		printf("[%d] [%s]\n", i, words[i]);
+	printf("[%s] => <%s>\n", words[1], *(char **)bsearch(&words[1], words, nb_words, sizeof(char *), cmp));
+	*n = 0;
+	free(words);
+	return (NULL);
+	(void)s;
+	(void)words;
+	(void)nb_words;
+}
+
