@@ -32,6 +32,7 @@ int main(int ac, char const **av)
 		printf("%d", indices[i]);
 	}
 	printf("]\n");
+	free(indices);
 
 	return (EXIT_SUCCESS);
 }
