@@ -21,9 +21,11 @@ void free_trie(Trie *root)
  * @node: root of tree
  * @str: string to find
  * @k: characters of str to find
+ * @memo: the memoization array
+ * @j: index in memo
  * Return: 1 if found else 0
  */
-int search_trie(Trie *node, char *str, int k)
+int search_trie(Trie *node, char *str, int k, Trie **memo, int j)
 {
 	for (; k; str++, k--)
 	{
@@ -32,6 +34,7 @@ int search_trie(Trie *node, char *str, int k)
 		node = node->children[INDEX(*str)];
 	}
 
+	memo[j] = node;
 	if (node->left-- > 0)
 	{
 		return (1);
@@ -83,26 +86,27 @@ void make_trie(Trie *root, char const **words, int nb_words, Trie **nodes)
 int *find_substring(char const *s, char const **words, int nb_words, int *n)
 {
 	int i = 0, j, k, slen, matches;
-	Trie *root, **nodes;
+	Trie *root, **nodes, **memo;
 	int *indices;
 
 	*n = 0;
-	indices = calloc(1000, sizeof(int));
+	slen = strlen(s);
+	k = strlen(words[0]);
+	indices = calloc(slen, sizeof(int));
 	root = calloc(1, sizeof(Trie));
-	nodes = calloc(1, sizeof(*nodes) * nb_words);
+	nodes = calloc(nb_words, sizeof(*nodes));
+	memo = calloc(slen, sizeof(*memo));
 	if (!indices || !root || !nodes)
 		exit(1);
 	make_trie(root, words, nb_words, nodes);
-
-	slen = strlen(s);
-	k = strlen(words[0]);
 
 	for (i = 0; i < slen; i++)
 	{
 		matches = 0;
 		for (j = i; j <= slen - k; j += k)
 		{
-			if (search_trie(root, (char *)s + j, k))
+			if ((memo[j] && memo[j]->left-- > 0) ||
+				search_trie(root, (char *)s + j, k, memo, j))
 			{
 				if (++matches == nb_words)
 				{
@@ -117,8 +121,7 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 		for (j = 0; j < nb_words; j++)
 			nodes[j]->left = nodes[j]->count;
 	}
-	free_trie(root);
-	free(nodes);
+	free_trie(root), free(nodes), free(memo);
 	if (*n == 0)
 		indices = (free(indices), NULL);
 	return (indices);
