@@ -96,7 +96,7 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 	root = calloc(1, sizeof(Trie));
 	nodes = calloc(nb_words, sizeof(*nodes));
 	memo = calloc(slen, sizeof(*memo));
-	if (!indices || !root || !nodes)
+	if (!indices || !root || !nodes || !memo)
 		exit(1);
 	make_trie(root, words, nb_words, nodes);
 
