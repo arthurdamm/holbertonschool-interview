@@ -4,8 +4,10 @@
 
 def isWinner(x, nums):
     """Solves Prime Game"""
+    if not nums or not x:
+    	return None
     n = max(nums)
-    sieve = [True for _ in range(n + 1)]
+    sieve = [True for _ in range(max(n + 1, 2))]
     for i in range(2, int(pow(n, 0.5)) + 1):
         if not sieve[i]:
             continue
@@ -22,8 +24,9 @@ def isWinner(x, nums):
     player1 = 0
     for n in range(len(nums)):
         player1 += sieve[n] % 2 == 1
-    if not x or player1 * 2 == n:
+    if player1 * 2 == len(nums):
         return None
-    if player1 * 2 > n:
+    if player1 * 2 > len(nums):
         return "Maria"
     return "Ben"
+ 
